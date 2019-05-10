@@ -1,6 +1,17 @@
 cmake_minimum_required(VERSION 2.8.3)
 project(dartv2)
 
+# Compilation depends on machine x86_64 or armv7l
+option(ARCH_X86_64 "Compile on X86_64 - Sim Rob " ON)
+option(ARCH_ARMV7L "Option description" OFF)
+
+if(ARCH_X86_64)
+  add_definitions(-DARCH_X86_64)
+endif()
+if(ARCH_ARMV7L)
+  add_definitions(-DARCH_ARMV7L)
+endif()
+
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
 
@@ -199,5 +210,10 @@ include_directories(
 # catkin_add_nosetests(test)
 
 add_executable(dartv2_cmd_motors src/dartv2_cmd_motors.cpp)
-target_link_libraries(dartv2_cmd_motors /home/ubuntu/ros/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
+if(ARCH_ARMV7L)
+  target_link_libraries(dartv2_cmd_motors /home/ubuntu/ros/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
+endif()
+if(ARCH_X86_64)
+  target_link_libraries(dartv2_cmd_motors ${catkin_LIBRARIES})
+endif()
 add_dependencies(dartv2_cmd_motors dartv2_generate_messages_cpp)

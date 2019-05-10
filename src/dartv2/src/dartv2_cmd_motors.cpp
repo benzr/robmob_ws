@@ -1,10 +1,14 @@
 #include "ros/ros.h"
 #include <dartv2/Dartv2CmdMotors.h>
 #include <geometry_msgs/Twist.h> // got from rostopic type /cmd_vel
+#ifdef ARCH_ARMV7L 
 extern "C" {
 #include "/home/ubuntu/ros/libdartv2i2c/trex_io.h"
 #include "/home/ubuntu/ros/libdartv2i2c/i2c.h"
 }
+#endif
+#ifdef ARCH_X86_64
+#endif
 
 int i2c_fd;
 
@@ -27,7 +31,9 @@ void cmdMotorsCallback(const dartv2::Dartv2CmdMotors::ConstPtr& msg)
   if (cmdRight < -255) {
     cmdRight = -255;
   }
+#ifdef ARCH_ARMV7L 
   int status = dartv2i2c_trex_cmd_motors (i2c_fd, cmdLeft, cmdRight);
+#endif
 }
 
 // callback activated each time a message from teleop is received
@@ -51,15 +57,18 @@ void teleopCallback(const geometry_msgs::Twist::ConstPtr& msg)
   if (cmdRight < -255) {
     cmdRight = -255;
   }
+#ifdef ARCH_ARMV7L 
   int status = dartv2i2c_trex_cmd_motors (i2c_fd, cmdLeft, cmdRight);
+#endif
 }
 
 int main(int argc, char **argv)
 {
+#ifdef ARCH_ARMV7L 
   // Init i2c
   const char *i2c_fname = "/dev/i2c-2";  // device name
   i2c_fd = i2c_init(i2c_fname);
-
+#endif
   // init ROS
   ros::init(argc, argv, "cmd_motors");
   // create handle
