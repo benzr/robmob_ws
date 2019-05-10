@@ -4,7 +4,7 @@ project(dartv2)
 # Compilation depends on machine x86_64 or armv7l
 EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCH )
 message( "Architecture is ${ARCH}" ...)
-if ( ${ARCH} STREQUAL "armv7l")
+if ( ARCH STREQUAL "armv7l")
   message( "T1 - Architecture ARMV7L is ${ARCH} " ...)
   option(ARCH_X86_64 "Compile on X86_64 - Sim Rob " OFF)
   option(ARCH_ARMV7L "Compile on ARMV7L - Real Rob" ON)
