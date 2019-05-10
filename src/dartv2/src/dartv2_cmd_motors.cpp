@@ -34,6 +34,9 @@ void cmdMotorsCallback(const dartv2::Dartv2CmdMotors::ConstPtr& msg)
 #ifdef ARCH_ARMV7L 
   int status = dartv2i2c_trex_cmd_motors (i2c_fd, cmdLeft, cmdRight);
 #endif
+#ifdef ARCH_X86_64
+  printf ("todo. rob sim here ...\n");
+#endif
 }
 
 // callback activated each time a message from teleop is received
@@ -59,6 +62,9 @@ void teleopCallback(const geometry_msgs::Twist::ConstPtr& msg)
   }
 #ifdef ARCH_ARMV7L 
   int status = dartv2i2c_trex_cmd_motors (i2c_fd, cmdLeft, cmdRight);
+#endif
+#ifdef ARCH_X86_64
+  printf ("todo. rob sim here ...\n");
 #endif
 }
 
