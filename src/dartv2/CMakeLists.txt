@@ -221,9 +221,11 @@ include_directories(
 
 add_executable(dartv2_cmd_motors src/dartv2_cmd_motors.cpp)
 if(ARCH_ARMV7L)
+  message( "T3 - Architecture ARMV7L is ${ARCH} " ...)
   target_link_libraries(dartv2_cmd_motors /home/ubuntu/ros/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
 endif()
 if(ARCH_X86_64)
+  message( "T3 - Architecture X86_64 is ${ARCH} " ...)
   target_link_libraries(dartv2_cmd_motors ${catkin_LIBRARIES})
 endif()
 add_dependencies(dartv2_cmd_motors dartv2_generate_messages_cpp)
