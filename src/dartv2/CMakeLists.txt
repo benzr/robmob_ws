@@ -11,7 +11,8 @@ if ( ARCH STREQUAL "armv7l")
   option(ARCH_X86_64 "Compile on X86_64 - Sim Rob " OFF)
   option(ARCH_ARMV7L "Compile on ARMV7L - Real Rob" ON)
   EXECUTE_PROCESS( COMMAND make WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/../extlibs/libioi2c)
-else()
+endif()
+if ( ARCH STREQUAL "x86_64")
   message( "T1 - Architecture X86_64 is ${ARCH} " ...)
   add_definitions(-DARCH_X86_64)
   option(ARCH_X86_64 "Compile on X86_64 - Sim Rob " ON)
@@ -217,12 +218,16 @@ include_directories(
 # catkin_add_nosetests(test)
 
 add_executable(dartv2_cmd_motors src/dartv2_cmd_motors.cpp)
+
 if ( ARCH STREQUAL "armv7l")
   message( "T2 - Architecture ARMV7L is ${ARCH} " ...)
   target_link_libraries(dartv2_cmd_motors /home/ubuntu/ros/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
-else()
+endif()
+
+if ( ARCH STREQUAL "x86_64")
   message( "T2 - Architecture X86_64 is ${ARCH} " ...)
   target_link_libraries(dartv2_cmd_motors ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
   #target_link_libraries(dartv2_cmd_motors /home/newubu/Robotics/ros/robmob_ws/extlibs/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
 endif()
+
 add_dependencies(dartv2_cmd_motors dartv2_generate_messages_cpp)
