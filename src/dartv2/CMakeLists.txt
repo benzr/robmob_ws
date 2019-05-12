@@ -2,18 +2,21 @@ cmake_minimum_required(VERSION 2.8.3)
 project(dartv2)
 
 # Compilation depends on machine x86_64 or armv7l
+EXECUTE_PROCESS( COMMAND make WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c)
 EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCH )
 message( "Architecture is ${ARCH}" ...)
 if ( ARCH STREQUAL "armv7l")
   message( "T1 - Architecture ARMV7L is ${ARCH} " ...)
   add_definitions(-DARCH_ARMV7L)
-  option(ARCH_X86_64 "Compile on X86_64 - Sim Rob " NONE)
+  option(ARCH_X86_64 "Compile on X86_64 - Sim Rob " OFF)
   option(ARCH_ARMV7L "Compile on ARMV7L - Real Rob" ON)
+  EXECUTE_PROCESS( COMMAND make WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/../extlibs/libioi2c)
 else()
   message( "T1 - Architecture X86_64 is ${ARCH} " ...)
   add_definitions(-DARCH_X86_64)
   option(ARCH_X86_64 "Compile on X86_64 - Sim Rob " ON)
   option(ARCH_ARMV7L "Compile on ARMV7L - Real Rob" OFF)
+  EXECUTE_PROCESS( COMMAND make WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/../extlibs/libsimioi2c)
 endif()
 
 ## Compile as C++11, supported in ROS Kinetic and newer
@@ -118,10 +121,10 @@ generate_messages(
 ## CATKIN_DEPENDS: catkin_packages dependent projects also need
 ## DEPENDS: system dependencies of this project that dependent projects also need
 catkin_package(
-  INCLUDE_DIRS include
+  #INCLUDE_DIRS include
   LIBRARIES dartv2
   CATKIN_DEPENDS message_runtime roscpp rospy std_msgs
-  DEPENDS system_lib
+  #DEPENDS system_lib
 )
 
 ###########
