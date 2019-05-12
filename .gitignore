@@ -4,6 +4,8 @@
 /build
 *.o
 *.a
-/extlibs/libdartv2i2c/tst
-/extlibs/libsimioi2c/tst
 *~
+/extlibs/tests/tst_libdartv2i2c
+/extlibs/tests/tstsim_libdartv2i2c
+/extlibs/tests/tst_libioi2c
+/extlibs/tests/tstsim_libioi2c
