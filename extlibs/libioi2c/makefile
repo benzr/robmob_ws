@@ -1,6 +1,3 @@
-tst: tst.c libioi2c.a
-	gcc -o tst tst.c -L. -lioi2c
-
 libioi2c.a: i2c.o 
 	ar rcs libioi2c.a i2c.o 
 

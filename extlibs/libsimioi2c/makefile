@@ -1,6 +1,3 @@
-tst: tst.c libsimioi2c.a
-	gcc -o tst tst.c -L. -lsimioi2c
-
 libsimioi2c.a: i2c.o 
 	ar rcs libsimioi2c.a i2c.o 
 

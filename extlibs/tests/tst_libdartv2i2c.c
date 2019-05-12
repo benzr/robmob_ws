@@ -2,8 +2,6 @@
 #include <stdlib.h>
 #include <unistd.h>
 #include "dartv2i2c.h"
-#include "../libsimioi2c/i2c.h"
-//#include "../libioi2c/i2c.h"
 
 void delay(float dt) {
   unsigned int idt;
@@ -20,7 +18,7 @@ int main(int argc, char *argv[]) {
   // init i2c
   int i2c_fd = -1;  // file descriptor
   const char *i2c_fname = "/dev/i2c-2";  // device name
-  i2c_fd = i2c_init(i2c_fname);
+  i2c_fd = dartv2i2c_open(i2c_fname);
 
   int mode = 1;
   status =  dartv2i2c_sonars_set_mode_cardinal(i2c_fd, mode, mode, mode, mode);
@@ -59,6 +57,6 @@ int main(int argc, char *argv[]) {
   printf ("Battery level is %.2f V\n",batlvl);
 
   // close i2c (not mandatory)
-  i2c_close(i2c_fd);
+  dartv2i2c_close(i2c_fd);
 
 }

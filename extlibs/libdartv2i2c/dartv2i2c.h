@@ -73,6 +73,9 @@ typedef struct I2C_output_packet_sonars_dist
 
 #endif
 
+int dartv2i2c_open(const char* devFile);
+int dartv2i2c_close(int fd);
+
 int dartv2i2c_trex_get_front_encoders (int fd, int *enc_l, int *enc_r);
 int dartv2i2c_trex_cmd_motors (int fd, int mot_l, int mot_r);
 
