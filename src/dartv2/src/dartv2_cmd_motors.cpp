@@ -3,8 +3,7 @@
 #include <geometry_msgs/Twist.h> // got from rostopic type /cmd_vel
 #ifdef ARCH_ARMV7L 
 extern "C" {
-#include "/home/ubuntu/ros/libdartv2i2c/trex_io.h"
-#include "/home/ubuntu/ros/libdartv2i2c/i2c.h"
+#include "../../extlibs/libdartv2i2c/dartv2i2c.h"
 }
 #endif
 #ifdef ARCH_X86_64
@@ -73,7 +72,7 @@ int main(int argc, char **argv)
 #ifdef ARCH_ARMV7L 
   // Init i2c
   const char *i2c_fname = "/dev/i2c-2";  // device name
-  i2c_fd = i2c_init(i2c_fname);
+  i2c_fd = dartv2i2c_open(i2c_fname);
 #endif
   // init ROS
   ros::init(argc, argv, "cmd_motors");
@@ -87,5 +86,10 @@ int main(int argc, char **argv)
 
   // infinite loop wait from messages from topic
   ros::spin();
+
+#ifdef ARCH_ARMV7L 
+  // end i2c
+  int status = dartv2i2c_close(i2c_fd);
+#endif
   return 0;
 }
