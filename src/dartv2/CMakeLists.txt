@@ -5,8 +5,8 @@ project(dartv2)
 EXECUTE_PROCESS( COMMAND make WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c)
 EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCH )
 message( "Architecture is ${ARCH}" ...)
-if ( ARCH STREQUAL "armv7l")
-  message( "T1 - Architecture ARMV7L is ${ARCH} " ...)
+if ( ARCH STREQUAL "armv7l" OR ARCH STREQUAL "armv6l" )
+  message( "T1 - Architecture ARMV7L is ${ARCH} " ... )
   add_definitions(-DARCH_ARMV7L)
   option(ARCH_X86_64 "Compile on X86_64 - Sim Rob " OFF)
   option(ARCH_ARMV7L "Compile on ARMV7L - Real Rob" ON)
@@ -219,9 +219,9 @@ include_directories(
 
 add_executable(dartv2_cmd_motors src/dartv2_cmd_motors.cpp)
 
-if ( ARCH STREQUAL "armv7l")
+if ( ARCH STREQUAL "armv7l" OR ARCH STREQUAL "armv6l")
   message( "T2 - Architecture ARMV7L is ${ARCH} " ...)
-  target_link_libraries(dartv2_cmd_motors /home/ubuntu/ros/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
+  target_link_libraries(dartv2_cmd_motors ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
 endif()
 
 if ( ARCH STREQUAL "x86_64")
