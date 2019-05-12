@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "i2c.h"
+#include "../libioi2c/i2c.h"
 
 void delay(float dt) {
   unsigned int idt;

@@ -1,7 +1,7 @@
 #include <stdio.h>
 #include <stdlib.h>
 #include <unistd.h>
-#include "dartv2i2c.h"
+#include "../libdartv2i2c/dartv2i2c.h"
 
 void delay(float dt) {
   unsigned int idt;
