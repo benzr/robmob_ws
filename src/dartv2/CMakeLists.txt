@@ -2,7 +2,6 @@ cmake_minimum_required(VERSION 2.8.3)
 project(dartv2)
 
 # Compilation depends on machine x86_64 or armv7l
-EXECUTE_PROCESS( COMMAND make WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c)
 EXECUTE_PROCESS( COMMAND uname -m COMMAND tr -d '\n' OUTPUT_VARIABLE ARCH )
 message( "Architecture is ${ARCH}" ...)
 if ( ARCH STREQUAL "armv7l" OR ARCH STREQUAL "armv6l" )
@@ -19,6 +18,7 @@ if ( ARCH STREQUAL "x86_64")
   option(ARCH_ARMV7L "Compile on ARMV7L - Real Rob" OFF)
   EXECUTE_PROCESS( COMMAND make WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/../extlibs/libsimioi2c)
 endif()
+EXECUTE_PROCESS( COMMAND make WORKING_DIRECTORY  ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c)
 
 ## Compile as C++11, supported in ROS Kinetic and newer
 # add_compile_options(-std=c++11)
@@ -221,12 +221,12 @@ add_executable(dartv2_cmd_motors src/dartv2_cmd_motors.cpp)
 
 if ( ARCH STREQUAL "armv7l" OR ARCH STREQUAL "armv6l")
   message( "T2 - Architecture ARMV7L is ${ARCH} " ...)
-  target_link_libraries(dartv2_cmd_motors ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
+  target_link_libraries(dartv2_cmd_motors ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c/libdartv2i2c.a ${CMAKE_SOURCE_DIR}/../extlibs/libioi2c/libioi2c.a ${catkin_LIBRARIES})
 endif()
 
 if ( ARCH STREQUAL "x86_64")
   message( "T2 - Architecture X86_64 is ${ARCH} " ...)
-  target_link_libraries(dartv2_cmd_motors ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
+  target_link_libraries(dartv2_cmd_motors ${CMAKE_SOURCE_DIR}/../extlibs/libdartv2i2c/libdartv2i2c.a ${CMAKE_SOURCE_DIR}/../extlibs/libsimioi2c/libsimioi2c.a ${catkin_LIBRARIES})
   #target_link_libraries(dartv2_cmd_motors /home/newubu/Robotics/ros/robmob_ws/extlibs/libdartv2i2c/libdartv2i2c.a ${catkin_LIBRARIES})
 endif()
 
